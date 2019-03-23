@@ -6,6 +6,8 @@ import {
   HostListener
 } from "@angular/core";
 import LINKS from "./navbar-links";
+import { WindowWidthService } from "./window-width.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-navbar",
@@ -13,21 +15,32 @@ import LINKS from "./navbar-links";
   styleUrls: ["./navbar.component.scss"]
 })
 export class NavbarComponent implements OnInit {
+  private resizeSubscription: Subscription;
   screenWidth = window.innerWidth;
   links = LINKS;
-  constructor() {}
+  constructor(private windowWidthService: WindowWidthService) {}
 
   @ViewChild("header", { read: ElementRef }) header: ElementRef;
 
   ngOnInit() {
+    this.resizeSubscription = this.windowWidthService.onResize$.subscribe(
+      window => this.onResize(window.innerWidth) // console.log(size)
+    );
     this.links.forEach(element => {
       element.dropdown = false;
     });
   }
 
-  @HostListener("window:resize", ["$event"])
-  onResize(e) {
-    this.screenWidth = e.target.innerWidth; //= window.innerWidth;
+  ngOnDestroy() {
+    if (this.resizeSubscription) {
+      this.resizeSubscription.unsubscribe();
+    }
+  }
+
+  // @HostListener("window:resize", ["$event"])
+  onResize(size) {
+    console.log(size);
+    this.screenWidth = size;
     if (this.screenWidth > 767)
       this.header.nativeElement.classList.remove("menu-opened");
     // console.log(e.target.innerWidth);
