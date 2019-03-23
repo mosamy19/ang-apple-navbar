@@ -5,6 +5,7 @@ import {
   ViewChild,
   HostListener
 } from "@angular/core";
+import LINKS from "./navbar-links";
 
 @Component({
   selector: "app-navbar",
@@ -13,7 +14,7 @@ import {
 })
 export class NavbarComponent implements OnInit {
   screenWidth = window.innerWidth;
-
+  links = LINKS;
   constructor() {}
 
   @ViewChild("header", { read: ElementRef }) header: ElementRef;
@@ -33,5 +34,9 @@ export class NavbarComponent implements OnInit {
     let screenWidth = window.innerWidth;
     if (screenWidth < 768)
       this.header.nativeElement.classList.toggle("menu-opened");
+  }
+
+  dropMenu(e) {
+    e.target.closest(".plus").classList.toggle("clicked");
   }
 }
