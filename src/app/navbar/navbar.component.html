@@ -21,14 +21,14 @@
           </div>
           <div *ngIf="link.nestedLinks">
             <span style="color: #fff">
-              <div class="button__holder" (click)="dropMenu($event)">
+              <div class="button__holder" (click)="dropMenu($event, link)">
                 <!-- <h2>Hover me &rarr;</h2> -->
                 <button class="plus"></button>
               </div>
             </span>
           </div>
         </div>
-        <ul *ngIf="link.nestedLinks">
+        <ul class="dropdown" *ngIf="link.dropdown">
           <li
             style=" display: flex;
             align-items: center; height: 50px"

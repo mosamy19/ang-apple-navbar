@@ -33,7 +33,15 @@ const LINKS = [
   },
   {
     name: "Support",
-    tabColor: "#50c5ed"
+    tabColor: "#50c5ed",
+    nestedLinks: [
+      {
+        name: "iPhone"
+      },
+      {
+        name: "iPad"
+      }
+    ]
   }
 ];
 

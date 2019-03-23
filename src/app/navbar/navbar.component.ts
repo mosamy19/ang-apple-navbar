@@ -19,11 +19,14 @@ export class NavbarComponent implements OnInit {
 
   @ViewChild("header", { read: ElementRef }) header: ElementRef;
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.links.forEach(element => {
+      element.dropdown = false;
+    });
+  }
 
   @HostListener("window:resize", ["$event"])
   onResize(e) {
-    debugger;
     this.screenWidth = e.target.innerWidth; //= window.innerWidth;
     if (this.screenWidth > 767)
       this.header.nativeElement.classList.remove("menu-opened");
@@ -36,7 +39,8 @@ export class NavbarComponent implements OnInit {
       this.header.nativeElement.classList.toggle("menu-opened");
   }
 
-  dropMenu(e) {
+  dropMenu(e, link) {
+    link.dropdown ? (link.dropdown = false) : (link.dropdown = true);
     e.target.closest(".plus").classList.toggle("clicked");
   }
 }
